@@ -13,17 +13,17 @@
 #' @author T. Carruthers
 #' @seealso \link{RCM}
 #' @export
-cond.GSU = function(RCMinput,sims = 12, max_F=3, comp_like="multinomial",resample = T, silent=T){
+cond.GSU = function(RCMinput, sims = 12, max_F=3, comp_like="multinomial", resample = T, silent=T){
   setup()
   if(length(sims) == 1) simy = 1:sims
   if(length(sims) > 1) simy = sims
   OM = SubCpars(RCMinput$OM, simy)
 
-  RCMfit = RCM(OM, N_input[[3]], selectivity = "logistic_length",
-           s_selectivity = N_input[[3]]@Misc$s_selectivity,
-           start = list(ivul_par = N_input[[3]]@Misc$ivul_par),
-           map = list(ivul_par = N_input[[3]]@Misc$map_ivul_par),
-           max_F = maxF, mean_fit = T, condition = "catch",
+  RCMfit = RCM(OM, RCMinput[[3]], selectivity = "logistic_length",
+           s_selectivity = RCMinput[[3]]@Misc$s_selectivity,
+           start = list(ivul_par = RCMinput[[3]]@Misc$ivul_par),
+           map = list(ivul_par = RCMinput[[3]]@Misc$map_ivul_par),
+           max_F = max_F, mean_fit = T, condition = "catch",
            cores = 8,  drop_nonconv=T,drop_highF=T,comp_like = comp_like, silent=silent)
   RCMfit@OM@Name = paste0("Green sea urchin Stat. area ",RCMinput[[1]])
   RCMfit
