@@ -1,7 +1,7 @@
 
 #' Management Procedure for Green Sea Urchin
 #'
-#' A modifiable management procedure for Manila Clam that allows for adjustments to size limits, current effort and TAC control via indices
+#' A modifiable management procedure for Green Sea Urchin that allows for adjustments to size limits, current effort and TAC control via indices
 #'
 #' @param x Positive integer - the simulation number
 #' @param Data Object of class 'Data'
@@ -33,14 +33,14 @@
 #' @export
 MP.GSU = function(x, Data, reps=1, Min.size = 55, Max.size = NaN, CEff.Mult = NaN, C_I.targ = 1.0,
                  I.targ = 0.5, IS.targ = 0, IS.yrs = 6, IS.fac = 1, TAC.calc = "Ratio", maxTAC = 5.0, minTAC = 0.1,
-                 TACdec = 0.2, TACinc = 0.1, I.enp = 0.25, I_freq = c(0,1,0), calib_yrs = 2,
+                 TACdec = 0.2, TACinc = 0.1, I.enp = 0.25, I_freq = c(0,1,0,0,0), calib_yrs = 2,
                  HCR_CP_B = c(0, 0), HCR_CP_TAC = c(0,1), curI_2_target = 2,
                  DR = 0, Fdisc = 0.5){
 
-
+  # Rec = readRDS("C:/temp/Rec_GSU.rds"); x = readRDS("C:/temp/x_GSU.rds"); Data = readRDS("C:/temp/Data_GSU.rds"); Data; reps=1; Min.size = 55; Max.size = NaN; CEff.Mult = NaN; C_I.targ = 1.0;  I.targ = 0.5; IS.targ = 0; IS.yrs = 6; IS.fac = 1; TAC.calc = "Ratio"; maxTAC = 5.0; minTAC = 0.1;  TACdec = 0.2; TACinc = 0.1; I.enp = 0.25; I_freq = c(0,1,0,0,0); calib_yrs = 2; HCR_CP_B = c(0, 0); HCR_CP_TAC = c(0,1); curI_2_target = 2; DR = 0; Fdisc = 0.5
   dependencies = "Data@Cat, Data@AddInd"
   ny = length(Data@Year)
-  if(ny == 34){saveRDS(x,"C:/temp/x_GSU.rds"); saveRDS(Data,"C:/temp/Data_GSU.rds");stop()}
+  #if(ny == 45)    {saveRDS(x,"C:/temp/x_GSU.rds"); saveRDS(Data,"C:/temp/Data_GSU.rds");stop()}
 
   MPrec  = Data@MPrec[x] # last management recommendation
   if(is.na(MPrec)) MPrec = Data@Cat[x,ny] # if not available assume last historical catch observation
@@ -54,9 +54,10 @@ MP.GSU = function(x, Data, reps=1, Min.size = 55, Max.size = NaN, CEff.Mult = Na
   Year <- Data@Year[yind]
   C_hist <- Data@Cat[x, yind]
   I_hist <- Data@AddInd[x,,yind]  # all indices
+  ni = dim(I_hist)[1]
   I_hist[I_hist < 0] <- NA        # zeros are NAs
   nkeep = sum(I_freq!=0)
-  I_keep = I_obs_freq(I_hist, I_freq, LHYr, CurYr, Year) # This is the code that filters out future years where observations are not available
+  I_keep = I_obs_freq(I_hist, I_freq[1:ni], LHYr, CurYr, Year) # This is the code that filters out future years where observations are not available
   I_smth = array(NA,dim(I_keep))
 
   caliby = LHYrInd-(calib_yrs-1):0
@@ -106,11 +107,15 @@ MP.GSU = function(x, Data, reps=1, Min.size = 55, Max.size = NaN, CEff.Mult = Na
   } # end of TAC calcs
 
   # Minimum size limits
-  Rec@LR5 = Min.size*0.80
-  Rec@LFR = Min.size *1.25
+  #Rec@LR5 = Min.size*0.95
+  #Rec@LFR = Min.size *1.05
+  #Rec@Rmaxlen = 1
+  Rec@L5 = Min.size*0.95
+  Rec@LFS = Min.size *1.05
 
   # Maximum size limits
   if(!is.na(Max.size)) Rec@HS = Max.size
+  #saveRDS(x,"C:/temp/x_GSU.rds"); saveRDS(Data,"C:/temp/Data_GSU.rds"); saveRDS(Rec, "C:/temp/Rec_GSU.rds")
 
   Rec
 
