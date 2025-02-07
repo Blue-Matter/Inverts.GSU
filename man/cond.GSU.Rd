@@ -10,6 +10,7 @@ cond.GSU(
   max_F = 3,
   comp_like = "multinomial",
   resample = T,
+  parallel = T,
   silent = T
 )
 }
@@ -21,6 +22,8 @@ cond.GSU(
 \item{comp_like}{The likelihood function used for composition data (age / length) c("multinomial", "lognormal", "mvlogistic", "dirmult1", "dirmult2") see ?RCM}
 
 \item{resample}{Logical - should parameters be drawn from the variance covariance matrix of the MLE fit (T) or just the MLE parameter values (F)}
+
+\item{parallel}{Logical - should model fitting use multiple cores}
 
 \item{silent}{Logical - should all RCM messages be repressed (ie not read out onto the console)?}
 
