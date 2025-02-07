@@ -10,7 +10,7 @@ cond.GSU(
   max_F = 3,
   comp_like = "multinomial",
   resample = T,
-  parallel = T,
+  parallel = F,
   silent = T
 )
 }

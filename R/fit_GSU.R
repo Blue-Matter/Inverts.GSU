@@ -14,7 +14,7 @@
 #' @author T. Carruthers
 #' @seealso \link{RCM}
 #' @export
-cond.GSU = function(RCMinput, sims = 12, max_F=3, comp_like="multinomial", resample = T, parallel=T, silent=T){
+cond.GSU = function(RCMinput, sims = 12, max_F=3, comp_like="multinomial", resample = T, parallel=F, silent=T){
   if(parallel){
     setup()
     cores=parallel::detectCores()/2
