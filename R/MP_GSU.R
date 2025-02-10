@@ -32,12 +32,12 @@
 #' @author T. Carruthers
 #' @export
 MP.GSU = function(x, Data, reps=1, Min.size = 55, Max.size = NaN, CEff.Mult = NaN, C_I.targ = 1.0,
-                 I.targ = 0.5, IS.targ = 0, IS.yrs = 6, IS.fac = 1, TAC.calc = "Ratio", maxTAC = 5.0, minTAC = 0.1,
-                 TACdec = 0.2, TACinc = 0.1, I.enp = 0.25, I_freq = c(0,1,0,0,0), calib_yrs = 2,
+                 I.targ = 0.5, IS.targ = 0, IS.yrs = 6, IS.fac = 1, TAC.calc = "Ratio", maxTAC = 10.0, minTAC = 0.1,
+                 TACdec = 0.5, TACinc = 0.5, I.enp = 0.25, I_freq = c(0,1,0,0,0), calib_yrs = 2,
                  HCR_CP_B = c(0, 0), HCR_CP_TAC = c(0,1), curI_2_target = 2,
                  DR = 0, Fdisc = 0.5){
 
-  # Rec = readRDS("C:/temp/Rec_GSU.rds"); x = readRDS("C:/temp/x_GSU.rds"); Data = readRDS("C:/temp/Data_GSU.rds"); Data; reps=1; Min.size = 55; Max.size = NaN; CEff.Mult = NaN; C_I.targ = 1.0;  I.targ = 0.5; IS.targ = 0; IS.yrs = 6; IS.fac = 1; TAC.calc = "Ratio"; maxTAC = 5.0; minTAC = 0.1;  TACdec = 0.2; TACinc = 0.1; I.enp = 0.25; I_freq = c(0,1,0,0,0); calib_yrs = 2; HCR_CP_B = c(0, 0); HCR_CP_TAC = c(0,1); curI_2_target = 2; DR = 0; Fdisc = 0.5
+  #  x = readRDS("C:/temp/x_GSU.rds"); Data = readRDS("C:/temp/Data_GSU.rds"); Data; reps=1; Min.size = 55; Max.size = NaN; CEff.Mult = NaN; C_I.targ = 1.0;  I.targ = 0.5; IS.targ = 0; IS.yrs = 6; IS.fac = 1; TAC.calc = "Ratio"; maxTAC = 5.0; minTAC = 0.1;  TACdec = 0.2; TACinc = 0.1; I.enp = 0.25; I_freq = c(0,1,0,0,0); calib_yrs = 2; HCR_CP_B = c(0, 0); HCR_CP_TAC = c(0,1); curI_2_target = 2; DR = 0; Fdisc = 0.5
   dependencies = "Data@Cat, Data@AddInd"
   ny = length(Data@Year)
   #if(ny == 45)    {saveRDS(x,"C:/temp/x_GSU.rds"); saveRDS(Data,"C:/temp/Data_GSU.rds");stop()}
